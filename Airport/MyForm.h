@@ -1,5 +1,5 @@
 #pragma once
-
+#include "plane.h";
 namespace Airport {
 
 	using namespace System;
@@ -141,6 +141,8 @@ namespace Airport {
 	private: System::Windows::Forms::PictureBox^ PIC2;
 	private: System::Windows::Forms::PictureBox^ PIC7;
 	private: System::Windows::Forms::PictureBox^ PIC14;
+private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
+
 
 
 
@@ -195,6 +197,7 @@ namespace Airport {
 			this->Choose_HM_Strips = (gcnew System::Windows::Forms::TrackBar());
 			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->BUT_DEBUG_ChangeLanding = (gcnew System::Windows::Forms::Button());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC20))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC15))->BeginInit();
@@ -444,13 +447,14 @@ namespace Airport {
 			this->PIC1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC1.Image")));
 			this->PIC1->Location = System::Drawing::Point(6, 19);
 			this->PIC1->Name = L"PIC1";
-			this->PIC1->Size = System::Drawing::Size(134, 225);
+			this->PIC1->Size = System::Drawing::Size(600, 600);
 			this->PIC1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC1->TabIndex = 0;
 			this->PIC1->TabStop = false;
 			// 
 			// groupBox2
 			// 
+			this->groupBox2->Controls->Add(this->BUT_DEBUG_ChangeLanding);
 			this->groupBox2->Controls->Add(this->Debug_STOP);
 			this->groupBox2->Controls->Add(this->Debug_1);
 			this->groupBox2->Controls->Add(this->LBL_VOfStrips);
@@ -516,6 +520,16 @@ namespace Airport {
 			// 
 			this->timer1->Enabled = true;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::Timer1_Tick);
+			// 
+			// BUT_DEBUG_ChangeLanding
+			// 
+			this->BUT_DEBUG_ChangeLanding->Location = System::Drawing::Point(18, 223);
+			this->BUT_DEBUG_ChangeLanding->Name = L"BUT_DEBUG_ChangeLanding";
+			this->BUT_DEBUG_ChangeLanding->Size = System::Drawing::Size(222, 23);
+			this->BUT_DEBUG_ChangeLanding->TabIndex = 5;
+			this->BUT_DEBUG_ChangeLanding->Text = L"Change landing";
+			this->BUT_DEBUG_ChangeLanding->UseVisualStyleBackColor = true;
+			this->BUT_DEBUG_ChangeLanding->Click += gcnew System::EventHandler(this, &MyForm::BUT_DEBUG_ChangeLanding_Click);
 			// 
 			// MyForm
 			// 
@@ -592,9 +606,9 @@ namespace Airport {
 					 break;
 				 case 3:
 					 unshowAll();
-					 for (int i = 1; i < 21; i++) {
+					/* for (int i = 1; i < 21; i++) {
 						 Control result = this->Controls->Find("PIC" + Convert::ToString(i), true);
-					 }
+					 }*/
 					 PIC2->Visible = 1;
 					 PIC3->Visible = 1;
 					 break;
@@ -748,9 +762,12 @@ namespace Airport {
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void Timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
-		if(!stopStrips)	
-			ShowStrips(Choose_HM_Strips->Value);
+		if (!stopStrips)
+			ShowStrips(1);//Choose_HM_Strips->Value);
 
 	}
+private: System::Void BUT_DEBUG_ChangeLanding_Click(System::Object^ sender, System::EventArgs^ e) {
+	PIC1->Image = Image::FromFile(L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\full-full start takes off.png");
+}
 };
 }

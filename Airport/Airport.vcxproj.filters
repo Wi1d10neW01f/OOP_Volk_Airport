@@ -13,9 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы ресурсов\Landing">
+      <UniqueIdentifier>{a8b528bd-8db0-4551-92f5-728e6f2feec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\TakesOff">
+      <UniqueIdentifier>{be1c7478-7d9c-4bb0-82c7-f87fdd072b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\TakesOff\Full">
+      <UniqueIdentifier>{65c85365-4ba9-4f48-8fac-1440e5edb668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\TakesOff\Full\Full">
+      <UniqueIdentifier>{143fa198-07d6-473f-a687-011be5495725}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyForm.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="plane.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -23,5 +38,22 @@
     <ClInclude Include="MyForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="plane.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Pictures\full-full start takes off03.png">
+      <Filter>Файлы ресурсов\TakesOff\Full\Full</Filter>
+    </Image>
+    <Image Include="..\Pictures\full-full start takes off02.png">
+      <Filter>Файлы ресурсов\TakesOff\Full\Full</Filter>
+    </Image>
+    <Image Include="..\Pictures\full-full start takes off01.png">
+      <Filter>Файлы ресурсов\TakesOff\Full\Full</Filter>
+    </Image>
+    <Image Include="..\Pictures\img1.png">
+      <Filter>Файлы ресурсов\TakesOff\Full\Full</Filter>
+    </Image>
   </ItemGroup>
 </Project>
