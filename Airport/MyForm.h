@@ -130,7 +130,7 @@ namespace Airport {
 	private: System::Windows::Forms::PictureBox^ PIC17;
 	private: System::Windows::Forms::PictureBox^ PIC4;
 	private: System::Windows::Forms::PictureBox^ PIC16;
-	private: System::Windows::Forms::PictureBox^ PIC5;
+
 	private: System::Windows::Forms::PictureBox^ PIC6;
 	private: System::Windows::Forms::PictureBox^ PIC8;
 	private: System::Windows::Forms::PictureBox^ PIC13;
@@ -142,6 +142,15 @@ namespace Airport {
 	private: System::Windows::Forms::PictureBox^ PIC7;
 	private: System::Windows::Forms::PictureBox^ PIC14;
 private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
+private: System::Windows::Forms::RadioButton^ radioButton2;
+private: System::Windows::Forms::RadioButton^ radioButton1;
+private: System::Windows::Forms::Timer^ ChangePic;
+private: System::Windows::Forms::Button^ BUT_Change_TakeOff;
+private: System::Windows::Forms::PictureBox^ PIC5;
+private: System::Windows::Forms::Label^ label3;
+private: System::Windows::Forms::Label^ label2;
+private: System::Windows::Forms::ProgressBar^ PB_Endurance;
+private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 
 
 
@@ -180,7 +189,6 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			this->PIC12 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC11 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC10 = (gcnew System::Windows::Forms::PictureBox());
-			this->PIC5 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC9 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC8 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC7 = (gcnew System::Windows::Forms::PictureBox());
@@ -190,6 +198,10 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			this->PIC2 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC1 = (gcnew System::Windows::Forms::PictureBox());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->BUT_Change_TakeOff = (gcnew System::Windows::Forms::Button());
+			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->BUT_DEBUG_ChangeLanding = (gcnew System::Windows::Forms::Button());
 			this->Debug_STOP = (gcnew System::Windows::Forms::Button());
 			this->Debug_1 = (gcnew System::Windows::Forms::Button());
 			this->LBL_VOfStrips = (gcnew System::Windows::Forms::Label());
@@ -197,7 +209,12 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			this->Choose_HM_Strips = (gcnew System::Windows::Forms::TrackBar());
 			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->BUT_DEBUG_ChangeLanding = (gcnew System::Windows::Forms::Button());
+			this->ChangePic = (gcnew System::Windows::Forms::Timer(this->components));
+			this->PIC5 = (gcnew System::Windows::Forms::PictureBox());
+			this->PB_Fuel = (gcnew System::Windows::Forms::ProgressBar());
+			this->PB_Endurance = (gcnew System::Windows::Forms::ProgressBar());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC20))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC15))->BeginInit();
@@ -210,7 +227,6 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC12))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC11))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC10))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC5))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC9))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC8))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC7))->BeginInit();
@@ -221,10 +237,15 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC1))->BeginInit();
 			this->groupBox2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Choose_HM_Strips))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC5))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label3);
+			this->groupBox1->Controls->Add(this->label2);
+			this->groupBox1->Controls->Add(this->PB_Endurance);
+			this->groupBox1->Controls->Add(this->PB_Fuel);
 			this->groupBox1->Controls->Add(this->PIC20);
 			this->groupBox1->Controls->Add(this->PIC15);
 			this->groupBox1->Controls->Add(this->PIC19);
@@ -255,9 +276,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC20
 			// 
 			this->PIC20->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC20.Image")));
-			this->PIC20->Location = System::Drawing::Point(566, 713);
+			this->PIC20->Location = System::Drawing::Point(614, 918);
 			this->PIC20->Name = L"PIC20";
-			this->PIC20->Size = System::Drawing::Size(134, 225);
+			this->PIC20->Size = System::Drawing::Size(10, 10);
 			this->PIC20->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC20->TabIndex = 19;
 			this->PIC20->TabStop = false;
@@ -265,9 +286,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC15
 			// 
 			this->PIC15->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC15.Image")));
-			this->PIC15->Location = System::Drawing::Point(566, 479);
+			this->PIC15->Location = System::Drawing::Point(614, 902);
 			this->PIC15->Name = L"PIC15";
-			this->PIC15->Size = System::Drawing::Size(134, 225);
+			this->PIC15->Size = System::Drawing::Size(10, 10);
 			this->PIC15->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC15->TabIndex = 18;
 			this->PIC15->TabStop = false;
@@ -275,9 +296,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC19
 			// 
 			this->PIC19->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC19.Image")));
-			this->PIC19->Location = System::Drawing::Point(426, 713);
+			this->PIC19->Location = System::Drawing::Point(474, 918);
 			this->PIC19->Name = L"PIC19";
-			this->PIC19->Size = System::Drawing::Size(134, 225);
+			this->PIC19->Size = System::Drawing::Size(10, 10);
 			this->PIC19->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC19->TabIndex = 17;
 			this->PIC19->TabStop = false;
@@ -285,9 +306,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC18
 			// 
 			this->PIC18->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC18.Image")));
-			this->PIC18->Location = System::Drawing::Point(286, 713);
+			this->PIC18->Location = System::Drawing::Point(334, 918);
 			this->PIC18->Name = L"PIC18";
-			this->PIC18->Size = System::Drawing::Size(134, 225);
+			this->PIC18->Size = System::Drawing::Size(10, 10);
 			this->PIC18->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC18->TabIndex = 16;
 			this->PIC18->TabStop = false;
@@ -295,9 +316,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC17
 			// 
 			this->PIC17->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC17.Image")));
-			this->PIC17->Location = System::Drawing::Point(146, 713);
+			this->PIC17->Location = System::Drawing::Point(194, 918);
 			this->PIC17->Name = L"PIC17";
-			this->PIC17->Size = System::Drawing::Size(134, 225);
+			this->PIC17->Size = System::Drawing::Size(10, 10);
 			this->PIC17->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC17->TabIndex = 15;
 			this->PIC17->TabStop = false;
@@ -305,9 +326,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC16
 			// 
 			this->PIC16->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC16.Image")));
-			this->PIC16->Location = System::Drawing::Point(6, 713);
+			this->PIC16->Location = System::Drawing::Point(54, 918);
 			this->PIC16->Name = L"PIC16";
-			this->PIC16->Size = System::Drawing::Size(134, 225);
+			this->PIC16->Size = System::Drawing::Size(10, 10);
 			this->PIC16->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC16->TabIndex = 14;
 			this->PIC16->TabStop = false;
@@ -315,9 +336,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC14
 			// 
 			this->PIC14->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC14.Image")));
-			this->PIC14->Location = System::Drawing::Point(426, 479);
+			this->PIC14->Location = System::Drawing::Point(474, 902);
 			this->PIC14->Name = L"PIC14";
-			this->PIC14->Size = System::Drawing::Size(134, 225);
+			this->PIC14->Size = System::Drawing::Size(10, 10);
 			this->PIC14->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC14->TabIndex = 13;
 			this->PIC14->TabStop = false;
@@ -325,9 +346,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC13
 			// 
 			this->PIC13->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC13.Image")));
-			this->PIC13->Location = System::Drawing::Point(286, 479);
+			this->PIC13->Location = System::Drawing::Point(334, 902);
 			this->PIC13->Name = L"PIC13";
-			this->PIC13->Size = System::Drawing::Size(134, 225);
+			this->PIC13->Size = System::Drawing::Size(10, 10);
 			this->PIC13->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC13->TabIndex = 12;
 			this->PIC13->TabStop = false;
@@ -335,9 +356,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC12
 			// 
 			this->PIC12->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC12.Image")));
-			this->PIC12->Location = System::Drawing::Point(146, 479);
+			this->PIC12->Location = System::Drawing::Point(194, 902);
 			this->PIC12->Name = L"PIC12";
-			this->PIC12->Size = System::Drawing::Size(134, 225);
+			this->PIC12->Size = System::Drawing::Size(10, 10);
 			this->PIC12->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC12->TabIndex = 11;
 			this->PIC12->TabStop = false;
@@ -345,9 +366,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC11
 			// 
 			this->PIC11->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC11.Image")));
-			this->PIC11->Location = System::Drawing::Point(6, 479);
+			this->PIC11->Location = System::Drawing::Point(54, 902);
 			this->PIC11->Name = L"PIC11";
-			this->PIC11->Size = System::Drawing::Size(134, 225);
+			this->PIC11->Size = System::Drawing::Size(10, 10);
 			this->PIC11->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC11->TabIndex = 10;
 			this->PIC11->TabStop = false;
@@ -355,29 +376,19 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC10
 			// 
 			this->PIC10->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC10.Image")));
-			this->PIC10->Location = System::Drawing::Point(566, 250);
+			this->PIC10->Location = System::Drawing::Point(614, 886);
 			this->PIC10->Name = L"PIC10";
-			this->PIC10->Size = System::Drawing::Size(134, 225);
+			this->PIC10->Size = System::Drawing::Size(10, 10);
 			this->PIC10->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC10->TabIndex = 9;
 			this->PIC10->TabStop = false;
 			// 
-			// PIC5
-			// 
-			this->PIC5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC5.Image")));
-			this->PIC5->Location = System::Drawing::Point(566, 19);
-			this->PIC5->Name = L"PIC5";
-			this->PIC5->Size = System::Drawing::Size(134, 225);
-			this->PIC5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->PIC5->TabIndex = 8;
-			this->PIC5->TabStop = false;
-			// 
 			// PIC9
 			// 
 			this->PIC9->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC9.Image")));
-			this->PIC9->Location = System::Drawing::Point(426, 250);
+			this->PIC9->Location = System::Drawing::Point(474, 886);
 			this->PIC9->Name = L"PIC9";
-			this->PIC9->Size = System::Drawing::Size(134, 225);
+			this->PIC9->Size = System::Drawing::Size(10, 10);
 			this->PIC9->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC9->TabIndex = 7;
 			this->PIC9->TabStop = false;
@@ -385,9 +396,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC8
 			// 
 			this->PIC8->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC8.Image")));
-			this->PIC8->Location = System::Drawing::Point(286, 250);
+			this->PIC8->Location = System::Drawing::Point(334, 886);
 			this->PIC8->Name = L"PIC8";
-			this->PIC8->Size = System::Drawing::Size(134, 225);
+			this->PIC8->Size = System::Drawing::Size(10, 10);
 			this->PIC8->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC8->TabIndex = 6;
 			this->PIC8->TabStop = false;
@@ -395,9 +406,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC7
 			// 
 			this->PIC7->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC7.Image")));
-			this->PIC7->Location = System::Drawing::Point(146, 248);
+			this->PIC7->Location = System::Drawing::Point(194, 884);
 			this->PIC7->Name = L"PIC7";
-			this->PIC7->Size = System::Drawing::Size(134, 225);
+			this->PIC7->Size = System::Drawing::Size(10, 10);
 			this->PIC7->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC7->TabIndex = 5;
 			this->PIC7->TabStop = false;
@@ -405,9 +416,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC6
 			// 
 			this->PIC6->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC6.Image")));
-			this->PIC6->Location = System::Drawing::Point(6, 248);
+			this->PIC6->Location = System::Drawing::Point(54, 884);
 			this->PIC6->Name = L"PIC6";
-			this->PIC6->Size = System::Drawing::Size(134, 225);
+			this->PIC6->Size = System::Drawing::Size(10, 10);
 			this->PIC6->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC6->TabIndex = 4;
 			this->PIC6->TabStop = false;
@@ -415,9 +426,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC4
 			// 
 			this->PIC4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC4.Image")));
-			this->PIC4->Location = System::Drawing::Point(426, 19);
+			this->PIC4->Location = System::Drawing::Point(474, 870);
 			this->PIC4->Name = L"PIC4";
-			this->PIC4->Size = System::Drawing::Size(134, 225);
+			this->PIC4->Size = System::Drawing::Size(10, 10);
 			this->PIC4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC4->TabIndex = 3;
 			this->PIC4->TabStop = false;
@@ -425,9 +436,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC3
 			// 
 			this->PIC3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC3.Image")));
-			this->PIC3->Location = System::Drawing::Point(286, 19);
+			this->PIC3->Location = System::Drawing::Point(334, 870);
 			this->PIC3->Name = L"PIC3";
-			this->PIC3->Size = System::Drawing::Size(134, 225);
+			this->PIC3->Size = System::Drawing::Size(10, 10);
 			this->PIC3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC3->TabIndex = 2;
 			this->PIC3->TabStop = false;
@@ -435,9 +446,9 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			// PIC2
 			// 
 			this->PIC2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC2.Image")));
-			this->PIC2->Location = System::Drawing::Point(146, 19);
+			this->PIC2->Location = System::Drawing::Point(194, 870);
 			this->PIC2->Name = L"PIC2";
-			this->PIC2->Size = System::Drawing::Size(134, 225);
+			this->PIC2->Size = System::Drawing::Size(10, 10);
 			this->PIC2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC2->TabIndex = 1;
 			this->PIC2->TabStop = false;
@@ -447,13 +458,16 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			this->PIC1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC1.Image")));
 			this->PIC1->Location = System::Drawing::Point(6, 19);
 			this->PIC1->Name = L"PIC1";
-			this->PIC1->Size = System::Drawing::Size(600, 600);
+			this->PIC1->Size = System::Drawing::Size(640, 670);
 			this->PIC1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC1->TabIndex = 0;
 			this->PIC1->TabStop = false;
 			// 
 			// groupBox2
 			// 
+			this->groupBox2->Controls->Add(this->BUT_Change_TakeOff);
+			this->groupBox2->Controls->Add(this->radioButton2);
+			this->groupBox2->Controls->Add(this->radioButton1);
 			this->groupBox2->Controls->Add(this->BUT_DEBUG_ChangeLanding);
 			this->groupBox2->Controls->Add(this->Debug_STOP);
 			this->groupBox2->Controls->Add(this->Debug_1);
@@ -466,6 +480,50 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			this->groupBox2->TabIndex = 20;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Buttons and another things";
+			// 
+			// BUT_Change_TakeOff
+			// 
+			this->BUT_Change_TakeOff->Location = System::Drawing::Point(18, 194);
+			this->BUT_Change_TakeOff->Name = L"BUT_Change_TakeOff";
+			this->BUT_Change_TakeOff->Size = System::Drawing::Size(222, 23);
+			this->BUT_Change_TakeOff->TabIndex = 20;
+			this->BUT_Change_TakeOff->Text = L"Change Take Off";
+			this->BUT_Change_TakeOff->UseVisualStyleBackColor = true;
+			this->BUT_Change_TakeOff->Click += gcnew System::EventHandler(this, &MyForm::BUT_Change_TakeOff_Click);
+			// 
+			// radioButton2
+			// 
+			this->radioButton2->AutoSize = true;
+			this->radioButton2->Location = System::Drawing::Point(83, 253);
+			this->radioButton2->Name = L"radioButton2";
+			this->radioButton2->Size = System::Drawing::Size(39, 17);
+			this->radioButton2->TabIndex = 22;
+			this->radioButton2->Text = L"PC";
+			this->radioButton2->UseVisualStyleBackColor = true;
+			this->radioButton2->CheckedChanged += gcnew System::EventHandler(this, &MyForm::RadioButton2_CheckedChanged);
+			// 
+			// radioButton1
+			// 
+			this->radioButton1->AutoSize = true;
+			this->radioButton1->Checked = true;
+			this->radioButton1->Location = System::Drawing::Point(18, 252);
+			this->radioButton1->Name = L"radioButton1";
+			this->radioButton1->Size = System::Drawing::Size(58, 17);
+			this->radioButton1->TabIndex = 21;
+			this->radioButton1->TabStop = true;
+			this->radioButton1->Text = L"Laptop";
+			this->radioButton1->UseVisualStyleBackColor = true;
+			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &MyForm::RadioButton1_CheckedChanged);
+			// 
+			// BUT_DEBUG_ChangeLanding
+			// 
+			this->BUT_DEBUG_ChangeLanding->Location = System::Drawing::Point(18, 223);
+			this->BUT_DEBUG_ChangeLanding->Name = L"BUT_DEBUG_ChangeLanding";
+			this->BUT_DEBUG_ChangeLanding->Size = System::Drawing::Size(222, 23);
+			this->BUT_DEBUG_ChangeLanding->TabIndex = 5;
+			this->BUT_DEBUG_ChangeLanding->Text = L"Change landing";
+			this->BUT_DEBUG_ChangeLanding->UseVisualStyleBackColor = true;
+			this->BUT_DEBUG_ChangeLanding->Click += gcnew System::EventHandler(this, &MyForm::BUT_DEBUG_ChangeLanding_Click);
 			// 
 			// Debug_STOP
 			// 
@@ -521,15 +579,56 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			this->timer1->Enabled = true;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::Timer1_Tick);
 			// 
-			// BUT_DEBUG_ChangeLanding
+			// ChangePic
 			// 
-			this->BUT_DEBUG_ChangeLanding->Location = System::Drawing::Point(18, 223);
-			this->BUT_DEBUG_ChangeLanding->Name = L"BUT_DEBUG_ChangeLanding";
-			this->BUT_DEBUG_ChangeLanding->Size = System::Drawing::Size(222, 23);
-			this->BUT_DEBUG_ChangeLanding->TabIndex = 5;
-			this->BUT_DEBUG_ChangeLanding->Text = L"Change landing";
-			this->BUT_DEBUG_ChangeLanding->UseVisualStyleBackColor = true;
-			this->BUT_DEBUG_ChangeLanding->Click += gcnew System::EventHandler(this, &MyForm::BUT_DEBUG_ChangeLanding_Click);
+			this->ChangePic->Interval = 500;
+			this->ChangePic->Tick += gcnew System::EventHandler(this, &MyForm::ChangePic_Tick);
+			// 
+			// PIC5
+			// 
+			this->PIC5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC5.Image")));
+			this->PIC5->Location = System::Drawing::Point(614, 870);
+			this->PIC5->Name = L"PIC5";
+			this->PIC5->Size = System::Drawing::Size(10, 10);
+			this->PIC5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->PIC5->TabIndex = 8;
+			this->PIC5->TabStop = false;
+			// 
+			// PB_Fuel
+			// 
+			this->PB_Fuel->Location = System::Drawing::Point(6, 695);
+			this->PB_Fuel->Name = L"PB_Fuel";
+			this->PB_Fuel->Size = System::Drawing::Size(232, 36);
+			this->PB_Fuel->TabIndex = 20;
+			// 
+			// PB_Endurance
+			// 
+			this->PB_Endurance->Location = System::Drawing::Point(6, 737);
+			this->PB_Endurance->Name = L"PB_Endurance";
+			this->PB_Endurance->Size = System::Drawing::Size(232, 36);
+			this->PB_Endurance->TabIndex = 21;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label2->Location = System::Drawing::Point(244, 700);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(84, 31);
+			this->label2->TabIndex = 22;
+			this->label2->Text = L"FUEL";
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label3->Location = System::Drawing::Point(244, 742);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(188, 31);
+			this->label3->TabIndex = 23;
+			this->label3->Text = L"ENDURANCE";
 			// 
 			// MyForm
 			// 
@@ -543,6 +642,7 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			this->Text = L"Airport";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC20))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC15))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC19))->EndInit();
@@ -554,7 +654,6 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC12))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC11))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC10))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC5))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC9))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC8))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC7))->EndInit();
@@ -566,6 +665,7 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 			this->groupBox2->ResumeLayout(false);
 			this->groupBox2->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Choose_HM_Strips))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC5))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -764,10 +864,91 @@ private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
 	private: System::Void Timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
 		if (!stopStrips)
 			ShowStrips(1);//Choose_HM_Strips->Value);
-
 	}
+			 String^ path;
+			 bool takeoff = true;
 private: System::Void BUT_DEBUG_ChangeLanding_Click(System::Object^ sender, System::EventArgs^ e) {
-	PIC1->Image = Image::FromFile(L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\full-full start takes off.png");
+	takeoff = false;
+	int j = 0;
+	if (Laptop) {
+		path = L"C:\\Users\\admin\\source\\repos\\Wi1d10neW01f\\OOP_Volk_Airport\\Pictures\\";
+	}
+	else 
+		path = L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\";
+	for (int i = 1; i < 5; i++) {
+		String^ temp = Convert::ToString(path + "landing\\" + i + ".png");
+		PIC1->Image = Image::FromFile(temp);// image.resource("img0.png");
+		PIC1->Refresh();
+	Threading:Thread::Sleep(500);
+	}
+	PIC1->Image = Image::FromFile(Convert::ToString(path + "base strips.png"));
 }
+		 bool Laptop = 1;
+private: System::Void RadioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	Laptop = 1;
+	path = L"C:\\Users\\admin\\source\\repos\\Wi1d10neW01f\\OOP_Volk_Airport\\Pictures\\";
+}
+private: System::Void RadioButton2_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	Laptop = 0;
+	path = L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\";
+}
+		 int count = 0;
+private: System::Void ChangePic_Tick(System::Object^ sender, System::EventArgs^ e) {
+	if (!takeoff) {
+		//count++;
+		//PIC1->Image = Image::FromFile(Convert::ToString(path + "Full\\Full\\"+count+".png"));// image.resource("img0.png");
+	}
+	if (count == 4) {
+		count = 0;
+		takeoff = true;
+	}
+}
+		 Thread^ th;
+		 
+private: System::Void BUT_Change_TakeOff_Click(System::Object^ sender, System::EventArgs^ e) {
+	//th = gcnew Thread(gcnew ThreadStart(this, Airport::);
+	//PlaneSpawn(50, 72);
+	Animation(1, "take off");
+}	
+		 void PlaneSpawn(int fuel, int endurance) {
+			 SetFuelAndEndurance(fuel, endurance);
+			 Threading:Thread::Sleep(1000);
+			 
+		 }
+		 
+		
+		public: static void SetFuelAndEndurance(int fuel, int endurance) {
+			 for (int i = 0; i < fuel; i++) {
+				 PB_Fuel->Value++;
+			 }
+			 for (int i = 0; i < endurance; i++) {
+				 PB_Endurance->Value++;
+			 }
+			 PB_Fuel->Refresh();
+			 PB_Endurance->Refresh();
+			 PB_Fuel->Invalidate();
+			 PB_Fuel->Update();
+			 PB_Endurance->Invalidate();
+			 PB_Endurance->Update();
+			 Application::DoEvents();
+		 }
+		 void Animation(bool Laptop, String^ TOorLand) {
+			 //takeoff = false;
+		
+			 //int j = 0;
+			 if (Laptop) {
+				 path = L"C:\\Users\\admin\\source\\repos\\Wi1d10neW01f\\OOP_Volk_Airport\\Pictures\\";
+			 }
+			 else
+				 path = L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\";
+			 for (int i = 1; i < 5; i++) {
+				 String^ temp = Convert::ToString(path + TOorLand +	"\\" + i + ".png");
+				 PIC1->Image = Image::FromFile(temp);// image.resource("img0.png");
+				 PIC1->Refresh();
+			 Threading:Thread::Sleep(500);
+			 }
+			 PIC1->Image = Image::FromFile(Convert::ToString(path + "base strips.png"));
+
+		 }
 };
 }

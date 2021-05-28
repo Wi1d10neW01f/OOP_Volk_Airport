@@ -145,12 +145,6 @@
       <DependentUpon>MyForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Pictures\img1.png" />
-    <Image Include="..\Pictures\full-full start takes off01.png" />
-    <Image Include="..\Pictures\full-full start takes off02.png" />
-    <Image Include="..\Pictures\full-full start takes off03.png" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
