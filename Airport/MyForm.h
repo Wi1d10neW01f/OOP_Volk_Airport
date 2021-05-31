@@ -1,5 +1,6 @@
 #pragma once
 #include "plane.h";
+#include <time.h>
 namespace Airport {
 
 	using namespace System;
@@ -142,15 +143,19 @@ namespace Airport {
 	private: System::Windows::Forms::PictureBox^ PIC7;
 	private: System::Windows::Forms::PictureBox^ PIC14;
 private: System::Windows::Forms::Button^ BUT_DEBUG_ChangeLanding;
-private: System::Windows::Forms::RadioButton^ radioButton2;
-private: System::Windows::Forms::RadioButton^ radioButton1;
+
+
 private: System::Windows::Forms::Timer^ ChangePic;
 private: System::Windows::Forms::Button^ BUT_Change_TakeOff;
 private: System::Windows::Forms::PictureBox^ PIC5;
 private: System::Windows::Forms::Label^ label3;
 private: System::Windows::Forms::Label^ label2;
-private: System::Windows::Forms::ProgressBar^ PB_Endurance;
-private: System::Windows::Forms::ProgressBar^ PB_Fuel;
+private: System::Windows::Forms::Label^ LBL_END;
+private: System::Windows::Forms::Label^ LBL_FUEL;
+private: System::Windows::Forms::Button^ button1;
+private: System::Windows::Forms::Label^ LBL_Random;
+
+
 
 
 
@@ -178,6 +183,10 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->LBL_END = (gcnew System::Windows::Forms::Label());
+			this->LBL_FUEL = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->PIC20 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC15 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC19 = (gcnew System::Windows::Forms::PictureBox());
@@ -189,6 +198,7 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->PIC12 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC11 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC10 = (gcnew System::Windows::Forms::PictureBox());
+			this->PIC5 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC9 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC8 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC7 = (gcnew System::Windows::Forms::PictureBox());
@@ -198,9 +208,8 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->PIC2 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC1 = (gcnew System::Windows::Forms::PictureBox());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->BUT_Change_TakeOff = (gcnew System::Windows::Forms::Button());
-			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->BUT_DEBUG_ChangeLanding = (gcnew System::Windows::Forms::Button());
 			this->Debug_STOP = (gcnew System::Windows::Forms::Button());
 			this->Debug_1 = (gcnew System::Windows::Forms::Button());
@@ -210,11 +219,7 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->ChangePic = (gcnew System::Windows::Forms::Timer(this->components));
-			this->PIC5 = (gcnew System::Windows::Forms::PictureBox());
-			this->PB_Fuel = (gcnew System::Windows::Forms::ProgressBar());
-			this->PB_Endurance = (gcnew System::Windows::Forms::ProgressBar());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->LBL_Random = (gcnew System::Windows::Forms::Label());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC20))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC15))->BeginInit();
@@ -227,6 +232,7 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC12))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC11))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC10))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC5))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC9))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC8))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC7))->BeginInit();
@@ -237,15 +243,14 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC1))->BeginInit();
 			this->groupBox2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Choose_HM_Strips))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC5))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->LBL_END);
+			this->groupBox1->Controls->Add(this->LBL_FUEL);
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label2);
-			this->groupBox1->Controls->Add(this->PB_Endurance);
-			this->groupBox1->Controls->Add(this->PB_Fuel);
 			this->groupBox1->Controls->Add(this->PIC20);
 			this->groupBox1->Controls->Add(this->PIC15);
 			this->groupBox1->Controls->Add(this->PIC19);
@@ -272,6 +277,50 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Strips";
+			// 
+			// LBL_END
+			// 
+			this->LBL_END->AutoSize = true;
+			this->LBL_END->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->LBL_END->Location = System::Drawing::Point(151, 742);
+			this->LBL_END->Name = L"LBL_END";
+			this->LBL_END->Size = System::Drawing::Size(53, 31);
+			this->LBL_END->TabIndex = 25;
+			this->LBL_END->Text = L"\?%";
+			// 
+			// LBL_FUEL
+			// 
+			this->LBL_FUEL->AutoSize = true;
+			this->LBL_FUEL->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->LBL_FUEL->Location = System::Drawing::Point(151, 700);
+			this->LBL_FUEL->Name = L"LBL_FUEL";
+			this->LBL_FUEL->Size = System::Drawing::Size(53, 31);
+			this->LBL_FUEL->TabIndex = 24;
+			this->LBL_FUEL->Text = L"\?%";
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label3->Location = System::Drawing::Point(244, 742);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(188, 31);
+			this->label3->TabIndex = 23;
+			this->label3->Text = L"ENDURANCE";
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label2->Location = System::Drawing::Point(244, 700);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(84, 31);
+			this->label2->TabIndex = 22;
+			this->label2->Text = L"FUEL";
 			// 
 			// PIC20
 			// 
@@ -383,6 +432,16 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->PIC10->TabIndex = 9;
 			this->PIC10->TabStop = false;
 			// 
+			// PIC5
+			// 
+			this->PIC5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC5.Image")));
+			this->PIC5->Location = System::Drawing::Point(614, 870);
+			this->PIC5->Name = L"PIC5";
+			this->PIC5->Size = System::Drawing::Size(10, 10);
+			this->PIC5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->PIC5->TabIndex = 8;
+			this->PIC5->TabStop = false;
+			// 
 			// PIC9
 			// 
 			this->PIC9->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC9.Image")));
@@ -465,9 +524,9 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			// 
 			// groupBox2
 			// 
+			this->groupBox2->Controls->Add(this->LBL_Random);
+			this->groupBox2->Controls->Add(this->button1);
 			this->groupBox2->Controls->Add(this->BUT_Change_TakeOff);
-			this->groupBox2->Controls->Add(this->radioButton2);
-			this->groupBox2->Controls->Add(this->radioButton1);
 			this->groupBox2->Controls->Add(this->BUT_DEBUG_ChangeLanding);
 			this->groupBox2->Controls->Add(this->Debug_STOP);
 			this->groupBox2->Controls->Add(this->Debug_1);
@@ -481,6 +540,16 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Buttons and another things";
 			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(18, 253);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(222, 23);
+			this->button1->TabIndex = 21;
+			this->button1->Text = L"check random";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm::Button1_Click);
+			// 
 			// BUT_Change_TakeOff
 			// 
 			this->BUT_Change_TakeOff->Location = System::Drawing::Point(18, 194);
@@ -490,30 +559,6 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->BUT_Change_TakeOff->Text = L"Change Take Off";
 			this->BUT_Change_TakeOff->UseVisualStyleBackColor = true;
 			this->BUT_Change_TakeOff->Click += gcnew System::EventHandler(this, &MyForm::BUT_Change_TakeOff_Click);
-			// 
-			// radioButton2
-			// 
-			this->radioButton2->AutoSize = true;
-			this->radioButton2->Location = System::Drawing::Point(83, 253);
-			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(39, 17);
-			this->radioButton2->TabIndex = 22;
-			this->radioButton2->Text = L"PC";
-			this->radioButton2->UseVisualStyleBackColor = true;
-			this->radioButton2->CheckedChanged += gcnew System::EventHandler(this, &MyForm::RadioButton2_CheckedChanged);
-			// 
-			// radioButton1
-			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Checked = true;
-			this->radioButton1->Location = System::Drawing::Point(18, 252);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(58, 17);
-			this->radioButton1->TabIndex = 21;
-			this->radioButton1->TabStop = true;
-			this->radioButton1->Text = L"Laptop";
-			this->radioButton1->UseVisualStyleBackColor = true;
-			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &MyForm::RadioButton1_CheckedChanged);
 			// 
 			// BUT_DEBUG_ChangeLanding
 			// 
@@ -584,51 +629,14 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->ChangePic->Interval = 500;
 			this->ChangePic->Tick += gcnew System::EventHandler(this, &MyForm::ChangePic_Tick);
 			// 
-			// PIC5
+			// LBL_Random
 			// 
-			this->PIC5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PIC5.Image")));
-			this->PIC5->Location = System::Drawing::Point(614, 870);
-			this->PIC5->Name = L"PIC5";
-			this->PIC5->Size = System::Drawing::Size(10, 10);
-			this->PIC5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->PIC5->TabIndex = 8;
-			this->PIC5->TabStop = false;
-			// 
-			// PB_Fuel
-			// 
-			this->PB_Fuel->Location = System::Drawing::Point(6, 695);
-			this->PB_Fuel->Name = L"PB_Fuel";
-			this->PB_Fuel->Size = System::Drawing::Size(232, 36);
-			this->PB_Fuel->TabIndex = 20;
-			// 
-			// PB_Endurance
-			// 
-			this->PB_Endurance->Location = System::Drawing::Point(6, 737);
-			this->PB_Endurance->Name = L"PB_Endurance";
-			this->PB_Endurance->Size = System::Drawing::Size(232, 36);
-			this->PB_Endurance->TabIndex = 21;
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label2->Location = System::Drawing::Point(244, 700);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(84, 31);
-			this->label2->TabIndex = 22;
-			this->label2->Text = L"FUEL";
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label3->Location = System::Drawing::Point(244, 742);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(188, 31);
-			this->label3->TabIndex = 23;
-			this->label3->Text = L"ENDURANCE";
+			this->LBL_Random->AutoSize = true;
+			this->LBL_Random->Location = System::Drawing::Point(18, 283);
+			this->LBL_Random->Name = L"LBL_Random";
+			this->LBL_Random->Size = System::Drawing::Size(35, 13);
+			this->LBL_Random->TabIndex = 22;
+			this->LBL_Random->Text = L"label4";
 			// 
 			// MyForm
 			// 
@@ -654,6 +662,7 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC12))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC11))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC10))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC5))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC9))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC8))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC7))->EndInit();
@@ -665,7 +674,6 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			this->groupBox2->ResumeLayout(false);
 			this->groupBox2->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Choose_HM_Strips))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC5))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -856,6 +864,7 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 
 
 			 }
+			 plane^ myplane;
 	private: System::Void Debug_STOP_Click(System::Object^ sender, System::EventArgs^ e) {
 		stopStrips = true;
 	}
@@ -868,29 +877,9 @@ private: System::Windows::Forms::ProgressBar^ PB_Fuel;
 			 String^ path;
 			 bool takeoff = true;
 private: System::Void BUT_DEBUG_ChangeLanding_Click(System::Object^ sender, System::EventArgs^ e) {
-	takeoff = false;
-	int j = 0;
-	if (Laptop) {
-		path = L"C:\\Users\\admin\\source\\repos\\Wi1d10neW01f\\OOP_Volk_Airport\\Pictures\\";
-	}
-	else 
-		path = L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\";
-	for (int i = 1; i < 5; i++) {
-		String^ temp = Convert::ToString(path + "landing\\" + i + ".png");
-		PIC1->Image = Image::FromFile(temp);// image.resource("img0.png");
-		PIC1->Refresh();
-	Threading:Thread::Sleep(500);
-	}
-	PIC1->Image = Image::FromFile(Convert::ToString(path + "base strips.png"));
-}
-		 bool Laptop = 1;
-private: System::Void RadioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	Laptop = 1;
-	path = L"C:\\Users\\admin\\source\\repos\\Wi1d10neW01f\\OOP_Volk_Airport\\Pictures\\";
-}
-private: System::Void RadioButton2_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	Laptop = 0;
-	path = L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\";
+	PlaneSpawn(random(), random(), "landing");
+	LBL_END->Text = "?";
+	LBL_FUEL->Text = "?";
 }
 		 int count = 0;
 private: System::Void ChangePic_Tick(System::Object^ sender, System::EventArgs^ e) {
@@ -906,49 +895,48 @@ private: System::Void ChangePic_Tick(System::Object^ sender, System::EventArgs^ 
 		 Thread^ th;
 		 
 private: System::Void BUT_Change_TakeOff_Click(System::Object^ sender, System::EventArgs^ e) {
-	//th = gcnew Thread(gcnew ThreadStart(this, Airport::);
-	//PlaneSpawn(50, 72);
-	Animation(1, "take off");
+	PlaneSpawn(random(), random(), "take off");
+	LBL_END->Text = "?";
+	LBL_FUEL->Text = "?";
 }	
-		 void PlaneSpawn(int fuel, int endurance) {
+		 void PlaneSpawn(int fuel, int endurance, String^ TOorLand) {
+			 Animation(TOorLand);
+			// Threading:Thread::Sleep(1000);
+			 myplane->setFuel(fuel);
+			 myplane->setEnd(endurance);
 			 SetFuelAndEndurance(fuel, endurance);
-			 Threading:Thread::Sleep(1000);
-			 
 		 }
 		 
 		
-		public: static void SetFuelAndEndurance(int fuel, int endurance) {
-			 for (int i = 0; i < fuel; i++) {
-				 PB_Fuel->Value++;
-			 }
-			 for (int i = 0; i < endurance; i++) {
-				 PB_Endurance->Value++;
-			 }
-			 PB_Fuel->Refresh();
-			 PB_Endurance->Refresh();
-			 PB_Fuel->Invalidate();
-			 PB_Fuel->Update();
-			 PB_Endurance->Invalidate();
-			 PB_Endurance->Update();
-			 Application::DoEvents();
+		 void SetFuelAndEndurance(int fuel, int endurance) {
+			 LBL_FUEL->Text = myplane->getFuel().ToString();//fuel.ToString();
+			 LBL_END->Text = myplane->getEnd().ToString();//endurance.ToString();
+			 LBL_FUEL->Refresh();
+			 LBL_END->Refresh();
 		 }
-		 void Animation(bool Laptop, String^ TOorLand) {
-			 //takeoff = false;
-		
-			 //int j = 0;
-			 if (Laptop) {
-				 path = L"C:\\Users\\admin\\source\\repos\\Wi1d10neW01f\\OOP_Volk_Airport\\Pictures\\";
-			 }
-			 else
-				 path = L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\";
-			 for (int i = 1; i < 5; i++) {
-				 String^ temp = Convert::ToString(path + TOorLand +	"\\" + i + ".png");
-				 PIC1->Image = Image::FromFile(temp);// image.resource("img0.png");
-				 PIC1->Refresh();
-			 Threading:Thread::Sleep(500);
-			 }
-			 PIC1->Image = Image::FromFile(Convert::ToString(path + "base strips.png"));
+		 void Animation(String^ TOorLand) {
+			//path = L"C:\\Users\\admin\\source\\repos\\Wi1d10neW01f\\OOP_Volk_Airport\\Pictures\\";
+			path = L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\";
+			for (int i = 1; i < 5; i++) {
+				String^ temp = Convert::ToString(path + TOorLand +	"\\" + i + ".png");
+				PIC1->Image = Image::FromFile(temp);// image.resource("img0.png");
+				PIC1->Refresh();
+				Threading:Thread::Sleep(500);
+			}
+			PIC1->Image = Image::FromFile(Convert::ToString(path + "base strips.png"));
+		 }
+		 int random() {
+			 Random^ k = gcnew Random();
+			 //return k->Next();
+			 int a = k->Next(0, 101);
+			 LBL_Random->Text = a.ToString();
+			 return a;
+		 }
 
-		 }
+private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
+//	int k = random();
+//	LBL_Random->Text = k.ToString();
+	random();
+}
 };
 }

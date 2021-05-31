@@ -2,9 +2,12 @@
 ref class plane
 {
 	int _memb;
+	int fuel, endurance;
 public:
 	plane();
-	int get();
-	void set(int a);
+	int getFuel();
+	void setFuel(int a);
+	int getEnd();
+	void setEnd(int a);
 };
 
