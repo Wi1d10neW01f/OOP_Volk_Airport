@@ -208,6 +208,7 @@ private: System::Windows::Forms::Label^ LBL_Random;
 			this->PIC2 = (gcnew System::Windows::Forms::PictureBox());
 			this->PIC1 = (gcnew System::Windows::Forms::PictureBox());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->LBL_Random = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->BUT_Change_TakeOff = (gcnew System::Windows::Forms::Button());
 			this->BUT_DEBUG_ChangeLanding = (gcnew System::Windows::Forms::Button());
@@ -219,7 +220,6 @@ private: System::Windows::Forms::Label^ LBL_Random;
 			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->ChangePic = (gcnew System::Windows::Forms::Timer(this->components));
-			this->LBL_Random = (gcnew System::Windows::Forms::Label());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC20))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PIC15))->BeginInit();
@@ -521,6 +521,7 @@ private: System::Windows::Forms::Label^ LBL_Random;
 			this->PIC1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->PIC1->TabIndex = 0;
 			this->PIC1->TabStop = false;
+			this->PIC1->Click += gcnew System::EventHandler(this, &MyForm::PIC1_Click);
 			// 
 			// groupBox2
 			// 
@@ -539,6 +540,15 @@ private: System::Windows::Forms::Label^ LBL_Random;
 			this->groupBox2->TabIndex = 20;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Buttons and another things";
+			// 
+			// LBL_Random
+			// 
+			this->LBL_Random->AutoSize = true;
+			this->LBL_Random->Location = System::Drawing::Point(18, 283);
+			this->LBL_Random->Name = L"LBL_Random";
+			this->LBL_Random->Size = System::Drawing::Size(35, 13);
+			this->LBL_Random->TabIndex = 22;
+			this->LBL_Random->Text = L"label4";
 			// 
 			// button1
 			// 
@@ -628,15 +638,6 @@ private: System::Windows::Forms::Label^ LBL_Random;
 			// 
 			this->ChangePic->Interval = 500;
 			this->ChangePic->Tick += gcnew System::EventHandler(this, &MyForm::ChangePic_Tick);
-			// 
-			// LBL_Random
-			// 
-			this->LBL_Random->AutoSize = true;
-			this->LBL_Random->Location = System::Drawing::Point(18, 283);
-			this->LBL_Random->Name = L"LBL_Random";
-			this->LBL_Random->Size = System::Drawing::Size(35, 13);
-			this->LBL_Random->TabIndex = 22;
-			this->LBL_Random->Text = L"label4";
 			// 
 			// MyForm
 			// 
@@ -864,7 +865,7 @@ private: System::Windows::Forms::Label^ LBL_Random;
 
 
 			 }
-			 plane^ myplane;
+	plane^ myplane = gcnew plane();
 	private: System::Void Debug_STOP_Click(System::Object^ sender, System::EventArgs^ e) {
 		stopStrips = true;
 	}
@@ -874,15 +875,15 @@ private: System::Windows::Forms::Label^ LBL_Random;
 		if (!stopStrips)
 			ShowStrips(1);//Choose_HM_Strips->Value);
 	}
-			 String^ path;
-			 bool takeoff = true;
-private: System::Void BUT_DEBUG_ChangeLanding_Click(System::Object^ sender, System::EventArgs^ e) {
-	PlaneSpawn(random(), random(), "landing");
-	LBL_END->Text = "?";
-	LBL_FUEL->Text = "?";
-}
-		 int count = 0;
-private: System::Void ChangePic_Tick(System::Object^ sender, System::EventArgs^ e) {
+	String^ path;
+	bool takeoff = true;
+	private: System::Void BUT_DEBUG_ChangeLanding_Click(System::Object^ sender, System::EventArgs^ e) {
+		PlaneSpawn(random(), random(), "landing");
+		LBL_END->Text = "?";
+		LBL_FUEL->Text = "?";
+	}
+	int count = 0;//ono ebanulos'
+	private: System::Void ChangePic_Tick(System::Object^ sender, System::EventArgs^ e) {
 	if (!takeoff) {
 		//count++;
 		//PIC1->Image = Image::FromFile(Convert::ToString(path + "Full\\Full\\"+count+".png"));// image.resource("img0.png");
@@ -892,29 +893,26 @@ private: System::Void ChangePic_Tick(System::Object^ sender, System::EventArgs^ 
 		takeoff = true;
 	}
 }
-		 Thread^ th;
-		 
-private: System::Void BUT_Change_TakeOff_Click(System::Object^ sender, System::EventArgs^ e) {
+	Thread^ th;
+	private: System::Void BUT_Change_TakeOff_Click(System::Object^ sender, System::EventArgs^ e) {
 	PlaneSpawn(random(), random(), "take off");
 	LBL_END->Text = "?";
 	LBL_FUEL->Text = "?";
 }	
-		 void PlaneSpawn(int fuel, int endurance, String^ TOorLand) {
-			 Animation(TOorLand);
-			// Threading:Thread::Sleep(1000);
-			 myplane->setFuel(fuel);
-			 myplane->setEnd(endurance);
-			 SetFuelAndEndurance(fuel, endurance);
-		 }
-		 
-		
-		 void SetFuelAndEndurance(int fuel, int endurance) {
+	void PlaneSpawn(int fuel, int endurance, String^ TOorLand) {
+		myplane->setFuel(fuel);
+		myplane->setEnd(endurance);
+		SetFuelAndEndurance(fuel, endurance);
+		Animation(TOorLand);
+		//Threading:Thread::Sleep(1000);	 
+	}
+	void SetFuelAndEndurance(int fuel, int endurance) {
 			 LBL_FUEL->Text = myplane->getFuel().ToString();//fuel.ToString();
 			 LBL_END->Text = myplane->getEnd().ToString();//endurance.ToString();
 			 LBL_FUEL->Refresh();
 			 LBL_END->Refresh();
 		 }
-		 void Animation(String^ TOorLand) {
+	void Animation(String^ TOorLand) {
 			//path = L"C:\\Users\\admin\\source\\repos\\Wi1d10neW01f\\OOP_Volk_Airport\\Pictures\\";
 			path = L"C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\";
 			for (int i = 1; i < 5; i++) {
@@ -925,18 +923,18 @@ private: System::Void BUT_Change_TakeOff_Click(System::Object^ sender, System::E
 			}
 			PIC1->Image = Image::FromFile(Convert::ToString(path + "base strips.png"));
 		 }
-		 int random() {
-			 Random^ k = gcnew Random();
-			 //return k->Next();
+	int random() {
+			 Random^ k = gcnew Random(); 
 			 int a = k->Next(0, 101);
 			 LBL_Random->Text = a.ToString();
 			 return a;
 		 }
-
-private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
 //	int k = random();
 //	LBL_Random->Text = k.ToString();
 	random();
+}
+	private: System::Void PIC1_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
