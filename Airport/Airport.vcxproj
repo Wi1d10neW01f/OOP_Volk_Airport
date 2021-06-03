@@ -131,10 +131,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="airship.cpp" />
+    <ClCompile Include="helicopter.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="plane.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="airship.h" />
+    <ClInclude Include="helicopter.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
