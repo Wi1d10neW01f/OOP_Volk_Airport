@@ -22,6 +22,7 @@ public:
 		else if (heigth - minus < 15) heigth = 0;
 		else heigth = 15;
 	}
+	virtual void birds() { endurance -= 40; }
 	airship(int fu, int en, int sp, int he);
 
 	property int Endurance {

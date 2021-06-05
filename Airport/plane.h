@@ -4,7 +4,7 @@ ref class plane :
 	public airship
 {
 public:
-	
+	plane() {};
 	virtual void repair() override { endurance += 3; }
 	virtual void refuel() override { fuel += 35; }
 	virtual void increase() override { speed += 50; }
@@ -21,6 +21,7 @@ public:
 		else if (heigth - minus < 15) heigth = 0;
 		else heigth = 15; 
 	}
+	virtual void birds() override { endurance -= 50; }
 	plane(int fu, int en, int sp, int he);
 
 };

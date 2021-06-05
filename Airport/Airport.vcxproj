@@ -132,17 +132,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="airship.cpp" />
+    <ClCompile Include="birds.cpp" />
     <ClCompile Include="helicopter.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="plane.cpp" />
+    <ClCompile Include="weather.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="airship.h" />
+    <ClInclude Include="birds.h" />
     <ClInclude Include="helicopter.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="plane.h" />
+    <ClInclude Include="weather.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">
