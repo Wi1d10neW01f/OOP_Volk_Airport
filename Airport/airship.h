@@ -1,8 +1,10 @@
 #pragma once
+#include <cmath>
 
 ref class airship//дирижабль
 {
 public: int fuel, endurance, speed, heigth;
+	  int xCoord; float yCoord;
 
 public:
 	airship() {}
@@ -22,8 +24,19 @@ public:
 		else if (heigth - minus < 15) heigth = 0;
 		else heigth = 15;
 	}
-	virtual void birds() { endurance -= 40; }
+	virtual void birds(int x, float y) { 
+		if (x == xCoord && y == yCoord)
+			endurance = 0;
+		_beep(500, 5);
+	}
 	airship(int fu, int en, int sp, int he);
+	virtual void changeCoord(bool tl){
+		if (!tl)
+			xCoord--;
+		else
+			xCoord++;
+		yCoord = sqrt(xCoord);
+	}
 
 	property int Endurance {
 		int get() {

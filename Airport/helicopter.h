@@ -21,7 +21,20 @@ public:
 		else if (heigth - minus < 15) heigth = 0;
 		else heigth = 15;
 	}
-	virtual void birds() override { endurance -= 30; }
+	virtual void changeCoord(bool tl) override {
+		if (!tl)
+			xCoord--;
+		else
+			xCoord++;
+		yCoord = 2 * sqrt(xCoord);
+	}
+	virtual void birds(int x, float y) override {
+		if (x == xCoord && y == yCoord)
+			endurance -= 20;
+		if (endurance <= 0)
+			endurance = 5;
+		_beep(500, 5);
+	}
 	helicopter(int fu, int en, int sp, int he);
 };
 

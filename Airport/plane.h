@@ -21,7 +21,14 @@ public:
 		else if (heigth - minus < 15) heigth = 0;
 		else heigth = 15; 
 	}
-	virtual void birds() override { endurance -= 50; }
+	virtual void changeCoord(bool tl) override {
+		if (!tl)
+			xCoord--;
+		else
+			xCoord++;
+		yCoord = 0.2 * sqrt(xCoord);
+	}
+	//virtual void birds() override { endurance -= 50; }
 	plane(int fu, int en, int sp, int he);
 
 };

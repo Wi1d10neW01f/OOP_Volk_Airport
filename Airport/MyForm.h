@@ -4,9 +4,10 @@
 #include "airship.h"
 #include "helicopter.h";
 #include <random>
+#include "birds.h"
+#include "weather.h"
 #include <Windows.h>
 namespace Airport {
-
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -16,8 +17,6 @@ namespace Airport {
 	using namespace System::Threading;
 	using namespace System::Threading::Tasks;
 	using namespace System::Text;
-
-
 	/// <summary>
 	/// Сводка для MyForm
 	/// </summary>
@@ -47,36 +46,17 @@ namespace Airport {
 		}
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 	private: System::Windows::Forms::GroupBox^ groupBox2;
-
-
-
-
 	private: System::Windows::Forms::PictureBox^ PIC1;
-
-
-
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ LBL_END;
 	private: System::Windows::Forms::Label^ LBL_FUEL;
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::Label^ LBL_HEIGHT;
-
 	private: System::Windows::Forms::Label^ LBL_SPEED;
-
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::Label^ label6;
 	private: System::Windows::Forms::Button^ BUT_Helicopter;
-
 	private: System::Windows::Forms::Button^ BUT_Plane;
-
 	private: System::Windows::Forms::Button^ BUT_Airship;
 	private: System::Windows::Forms::Button^ BUT_Simulation;
 	private: System::Windows::Forms::Label^ LBL_Left;
@@ -85,9 +65,6 @@ namespace Airport {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ BUT_Birds;
 	private: System::Windows::Forms::Button^ BUT_Rain;
-
-
-
 	private: System::ComponentModel::IContainer^ components;
 	protected:
 	private:
@@ -388,10 +365,12 @@ namespace Airport {
 #pragma endregion
 		//constants
 
-		plane ^ myplane = gcnew plane(random(25, 75), random(5, 50), randomSpeed(1), randomHeight(1));
-		airship ^ myairship = gcnew airship(random(25, 75), random(5, 50), randomSpeed(0), randomHeight(0));
-		helicopter ^ myhelicopter = gcnew helicopter(random(25, 75), random(5, 50), randomSpeed(2), randomHeight(2));
-		String ^ path = "C:\\Users\\admin\\source\\repos\\Airport\\Pictures\\";//change me!
+		plane^ myplane = gcnew plane(random(25, 75), random(5, 50), randomSpeed(1), randomHeight(1));
+		airship^ myairship = gcnew airship(random(25, 75), random(5, 50), randomSpeed(0), randomHeight(0));
+		helicopter^ myhelicopter = gcnew helicopter(random(25, 75), random(5, 50), randomSpeed(2), randomHeight(2));
+		String^ path = "..\\Pictures\\";
+		birds^ mybirds = gcnew birds();
+		weather^ myrain = gcnew weather();
 		//constants
 
 		//randomazers
@@ -495,146 +474,152 @@ namespace Airport {
 			LBL_HEIGHT->Refresh();
 			startAnimation(2, 0);
 		}
-	private: System::Void BUT_Airship_Click(System::Object ^ sender, System::EventArgs ^ e) {
+	private: System::Void BUT_Airship_Click(System::Object^ sender, System::EventArgs^ e) {
 		airshipSpawn();
 	}
-	private: System::Void BUT_Plane_Click(System::Object ^ sender, System::EventArgs ^ e) {
+	private: System::Void BUT_Plane_Click(System::Object^ sender, System::EventArgs^ e) {
 		planeSpawn();
 	}
-	private: System::Void BUT_Helicopter_Click(System::Object ^ sender, System::EventArgs ^ e) {
+	private: System::Void BUT_Helicopter_Click(System::Object^ sender, System::EventArgs^ e) {
 		heliSpawn();
 	}
-			 void spawnSmth(int a) {
-				 switch (a) {
-				 case 0: {
-					 airshipSpawn();
-					 break;
-				 }
-				 case 1: {
-					 planeSpawn();
-					 break;
-				 }
-				 case 2: {
-					 heliSpawn();
-					 break;
-				 }
-				 }
-			 }
-			 //spawners
-			 //function for manage objects
-			 void Refuel(bool Ship, bool Plane, bool Heli) {
-				 LBL_FUEL->Text = "";
-				 LBL_FUEL->Refresh();
-				 if (Ship && !Plane && !Heli) {
-					 myairship->refuel();
-					 if (myairship->fuel > 100)
-						 myairship->fuel = 100;
-					 LBL_FUEL->Text = myairship->fuel.ToString();
-				 }
-				 if (Plane && !Ship && !Heli) {
-					 myplane->refuel();
-					 if (myplane->fuel > 100)
-						 myplane->fuel = 100;
-					 LBL_FUEL->Text = myplane->fuel.ToString();
-				 }
-				 if (Heli && !Ship && !Plane) {
-					 myhelicopter->refuel();
-					 if (myhelicopter->fuel > 100)
-						 myhelicopter->fuel = 100;
-					 LBL_FUEL->Text = myhelicopter->fuel.ToString();
-				 }
-				 LBL_FUEL->Refresh();
-			 }
-			 void Repair(bool Ship, bool Plane, bool Heli) {
-				 LBL_END->Text = "";
-				 LBL_END->Refresh();
-				 if (Ship && !Plane && !Heli) {
-					 myairship->repair();
-					 if (myairship->endurance > 100)
-						 myairship->endurance = 100;
-					 LBL_END->Text = myairship->endurance.ToString();
-				 }
-				 if (Plane && !Ship && !Heli) {
-					 myplane->repair();
-					 if (myplane->endurance > 100)
-						 myplane->endurance = 100;
-					 LBL_END->Text = myplane->endurance.ToString();
-				 }
-				 if (Heli && !Ship && !Plane) {
-					 myhelicopter->repair();
-					 if (myhelicopter->endurance > 100)
-						 myhelicopter->endurance = 100;
-					 LBL_END->Text = myhelicopter->endurance.ToString();
-				 }
-				 LBL_END->Refresh();
-			 }
-			 void SpeedDecrease(bool Ship, bool Plane, bool Heli) {
-				 if (Ship && !Plane && !Heli) {
-					 myairship->decrease();
-					 LBL_SPEED->Text = myairship->speed.ToString();
-				 }
-				 if (Plane && !Ship && !Heli) {
-					 myplane->decrease();
-					 LBL_SPEED->Text = myplane->speed.ToString();
-				 }
-				 if (Heli && !Ship && !Plane) {
-					 myhelicopter->decrease();
-					 LBL_SPEED->Text = myhelicopter->speed.ToString();
-				 }
-				 LBL_SPEED->Refresh();
-			 }
-			 void SpeedIncrease(bool Ship, bool Plane, bool Heli) {
-				 if (Ship && !Plane && !Heli) {
-					 myairship->increase();
-					 LBL_SPEED->Text = myairship->speed.ToString();
-				 }
-				 if (Plane && !Ship && !Heli) {
-					 myplane->increase();
-					 LBL_SPEED->Text = myplane->speed.ToString();
-				 }
-				 if (Heli && !Ship && !Plane) {
-					 myhelicopter->increase();
-					 LBL_SPEED->Text = myhelicopter->speed.ToString();
-				 }
-				 LBL_SPEED->Refresh();
-			 }
-			 void HeightDecrease(bool Ship, bool Plane, bool Heli) {
-				 if (Ship && !Plane && !Heli) {
-					 myairship->down();
-					 LBL_HEIGHT->Text = myairship->heigth.ToString();
-				 }
-				 if (Plane && !Ship && !Heli) {
-					 myplane->down();
-					 LBL_HEIGHT->Text = myplane->heigth.ToString();
-				 }
-				 if (Heli && !Ship && !Plane) {
-					 myhelicopter->down();
-					 LBL_HEIGHT->Text = myhelicopter->heigth.ToString();
-				 }
-				 LBL_HEIGHT->Refresh();
-			 }
-			 void HeightIncrease(bool Ship, bool Plane, bool Heli) {
-				 if (Ship && !Plane && !Heli) {
-					 myairship->climb();
-					 LBL_HEIGHT->Text = myairship->heigth.ToString();
-				 }
-				 if (Plane && !Ship && !Heli) {
-					 myplane->climb();
-					 LBL_HEIGHT->Text = myplane->heigth.ToString();
-				 }
-				 if (Heli && !Ship && !Plane) {
-					 myhelicopter->climb();
-					 LBL_HEIGHT->Text = myhelicopter->heigth.ToString();
-				 }
-				 LBL_HEIGHT->Refresh();
-			 }
-			 //function for manage objects
+		   void spawnSmth(int a) {
+			   switch (a) {
+			   case 0: {
+				   airshipSpawn();
+				   break;
+			   }
+			   case 1: {
+				   planeSpawn();
+				   break;
+			   }
+			   case 2: {
+				   heliSpawn();
+				   break;
+			   }
+			   }
+		   }
+		   //spawners
+		   //function for manage objects
+		   void Refuel(bool Ship, bool Plane, bool Heli) {
+			   LBL_FUEL->Text = "";
+			   LBL_FUEL->Refresh();
+			   if (Ship && !Plane && !Heli) {
+				   myairship->refuel();
+				   if (myairship->fuel > 100)
+					   myairship->fuel = 100;
+				   LBL_FUEL->Text = myairship->fuel.ToString();
+			   }
+			   if (Plane && !Ship && !Heli) {
+				   myplane->refuel();
+				   if (myplane->fuel > 100)
+					   myplane->fuel = 100;
+				   LBL_FUEL->Text = myplane->fuel.ToString();
+			   }
+			   if (Heli && !Ship && !Plane) {
+				   myhelicopter->refuel();
+				   if (myhelicopter->fuel > 100)
+					   myhelicopter->fuel = 100;
+				   LBL_FUEL->Text = myhelicopter->fuel.ToString();
+			   }
+			   LBL_FUEL->Refresh();
+		   }
+		   void Repair(bool Ship, bool Plane, bool Heli) {
+			   LBL_END->Text = "";
+			   LBL_END->Refresh();
+			   if (Ship && !Plane && !Heli) {
+				   myairship->repair();
+				   if (myairship->endurance > 100)
+					   myairship->endurance = 100;
+				   LBL_END->Text = myairship->endurance.ToString();
+			   }
+			   if (Plane && !Ship && !Heli) {
+				   myplane->repair();
+				   if (myplane->endurance > 100)
+					   myplane->endurance = 100;
+				   LBL_END->Text = myplane->endurance.ToString();
+			   }
+			   if (Heli && !Ship && !Plane) {
+				   myhelicopter->repair();
+				   if (myhelicopter->endurance > 100)
+					   myhelicopter->endurance = 100;
+				   LBL_END->Text = myhelicopter->endurance.ToString();
+			   }
+			   LBL_END->Refresh();
+		   }
+		   void SpeedDecrease(bool Ship, bool Plane, bool Heli) {
+			   if (Ship && !Plane && !Heli) {
+				   myairship->decrease();
+				   LBL_SPEED->Text = myairship->speed.ToString();
+			   }
+			   if (Plane && !Ship && !Heli) {
+				   myplane->decrease();
+				   LBL_SPEED->Text = myplane->speed.ToString();
+			   }
+			   if (Heli && !Ship && !Plane) {
+				   myhelicopter->decrease();
+				   LBL_SPEED->Text = myhelicopter->speed.ToString();
+			   }
+			   LBL_SPEED->Refresh();
+		   }
+		   void SpeedIncrease(bool Ship, bool Plane, bool Heli) {
+			   if (Ship && !Plane && !Heli) {
+				   myairship->increase();
+				   LBL_SPEED->Text = myairship->speed.ToString();
+			   }
+			   if (Plane && !Ship && !Heli) {
+				   myplane->increase();
+				   LBL_SPEED->Text = myplane->speed.ToString();
+			   }
+			   if (Heli && !Ship && !Plane) {
+				   myhelicopter->increase();
+				   LBL_SPEED->Text = myhelicopter->speed.ToString();
+			   }
+			   LBL_SPEED->Refresh();
+		   }
+		   void HeightDecrease(bool Ship, bool Plane, bool Heli) {
+			   if (Ship && !Plane && !Heli) {
+				   myairship->down();
+				   LBL_HEIGHT->Text = myairship->heigth.ToString();
+			   }
+			   if (Plane && !Ship && !Heli) {
+				   myplane->down();
+				   LBL_HEIGHT->Text = myplane->heigth.ToString();
+			   }
+			   if (Heli && !Ship && !Plane) {
+				   myhelicopter->down();
+				   LBL_HEIGHT->Text = myhelicopter->heigth.ToString();
+			   }
+			   LBL_HEIGHT->Refresh();
+		   }
+		   void HeightIncrease(bool Ship, bool Plane, bool Heli) {
+			   if (Ship && !Plane && !Heli) {
+				   myairship->climb();
+				   LBL_HEIGHT->Text = myairship->heigth.ToString();
+			   }
+			   if (Plane && !Ship && !Heli) {
+				   myplane->climb();
+				   LBL_HEIGHT->Text = myplane->heigth.ToString();
+			   }
+			   if (Heli && !Ship && !Plane) {
+				   myhelicopter->climb();
+				   LBL_HEIGHT->Text = myhelicopter->heigth.ToString();
+			   }
+			   LBL_HEIGHT->Refresh();
+		   }
+		   //function for manage objects
 
-			 //simulation
-	private: System::Void BUT_Simulation_Click(System::Object ^ sender, System::EventArgs ^ e) {
+		   //simulation
+	private: System::Void BUT_Simulation_Click(System::Object^ sender, System::EventArgs^ e) {
 		Random^ k = gcnew Random;
 		int SimulationCount = 10;
 		for (int i = 0; i < SimulationCount; i++) {
+			myplane->xCoord = 0;
+			myairship->xCoord = 0;
+			myhelicopter->xCoord = 0;
+			myplane->xCoord = 0;
+			myairship->xCoord = 0;
+			myhelicopter->xCoord = 0;
 			int a = k->Next(0, 3);
 			LBL_Count->Text = (i + 1).ToString();
 			LBL_Left->Text = (SimulationCount - i - 1).ToString();
@@ -650,335 +635,366 @@ namespace Airport {
 			"\n" + "Count of rains and Airships: " + RainAir + "\n" + "Count of rains and Planes: " + RainPlane +
 			"\n" + "Count of rains and Helicopters: " + RainHeli + "\n" + "Count of birds and Airships: " + BirdAir +
 			"\n" + "Count of birds and Planes: " + BirdPlane + "\n" + "Count of birds and Helicopters: " + BirdHeli
-			, "Result of simulation", MessageBoxButtons::OK , MessageBoxIcon::Asterisk);
+			, "Result of simulation", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		countBird = 0, countRain = 0, countHeli = 0, countPlane = 0, countAirship = 0;
 		BirdAir = 0, BirdHeli = 0, BirdPlane = 0;
 		RainAir = 0, RainHeli = 0, RainPlane = 0;
 	}
-			 //simulation
-			 int countBird = 0, countRain = 0, countHeli = 0, countPlane = 0, countAirship = 0;
-			 int BirdAir = 0, BirdHeli = 0, BirdPlane = 0;
-			 int RainAir = 0, RainHeli = 0, RainPlane = 0;
-			 void startAnimation(int type, bool TL) {
-				 String^ temp = path;
-				 bool Plane = 0, Ship = 0, Heli = 0;
-				 int birdRain = randomMinMax();
-				 switch (type) {
-				 case 0:
-					 Ship = 1;
-					 countAirship++;
-					 break;
-				 case 1:
-					 Plane = 1;
-					 countPlane++;
-					 break;
-				 case 2:
-					 Heli = 1;
-					 countHeli++;
-					 break;
-				 }
-				 if (birdRain >= 75) {
-					 temp += "rain\\";
-					 countRain++;
-					 if (Plane)
-						 RainPlane++;
-					 if (Heli)
-						 RainHeli++;
-					 if (Ship)
-						 RainAir++;
-					 rainAnimation(Ship, Plane, Heli, temp);
-				 }
-				 else if (birdRain <= 25) {
-					 Animation(0, 0);
-					 countBird++;
-					 if (Plane)
-						 BirdPlane++;
-					 if (Heli)
-						 BirdHeli++;
-					 if (Ship)
-						 BirdAir++;
-					 temp += "birds\\";
-					 birdAnimation(Ship, Plane, Heli, temp);
-				 }
-				 else {
-					 Animation(0, 0);
-					 Animation(0, 1);
-				 }
-			 }
-			 void birdAnimation(bool Ship, bool Plane, bool Heli, String ^ Path) {
-				 int maxcount;
-				 int countofland;
-				 if (Plane) {
-					 Path += "plane\\";
-					 maxcount = 7;
-					 for (int i = 0; i < maxcount; i++) {
-						 PIC1->Image = Image::FromFile(Path + i.ToString() + ".png");
-						 PIC1->Refresh();
-						 SpeedIncrease(Ship, Plane, Heli);
-						 HeightIncrease(Ship, Plane, Heli);
-						 Thread::Sleep(550);
-					 }
-				 }
-				 if (Heli) {
-					 myhelicopter->heigth = 0;
-					 myhelicopter->speed = 0;
-					 Path += "heli\\";
-					 maxcount = 11;
-					 countofland = 5;
-					 for (int i = 0; i < maxcount; i++) {
-						 PIC1->Image = Image::FromFile(Path + i.ToString() + ".png");
-						 PIC1->Refresh();
-						 if (i > countofland) {
-							 SpeedDecrease(Ship, Plane, Heli);
-							 HeightDecrease(Ship, Plane, Heli);
-						 }
-						 else {
-							 SpeedIncrease(Ship, Plane, Heli);
-							 HeightIncrease(Ship, Plane, Heli);
-						 }
-						 Thread::Sleep(550);
-					 }
-				 }
-				 if (Ship) {
-					 Path += "airship\\";
-					 maxcount = 7;
-					 countofland = 4;
-					 for (int i = 0; i < maxcount; i++) {
-						 PIC1->Image = Image::FromFile(Path + i.ToString() + ".png");
-						 PIC1->Refresh();
-						 if (maxcount >= countofland) {
-							 SpeedDecrease(Ship, Plane, Heli);
-							 HeightDecrease(Ship, Plane, Heli);
-						 }
-						 else {
-							 SpeedIncrease(Ship, Plane, Heli);
-							 HeightIncrease(Ship, Plane, Heli);
-						 }
-						 Thread::Sleep(550);
-					 }
-				 }
+		   //simulation
+		   int countBird = 0, countRain = 0, countHeli = 0, countPlane = 0, countAirship = 0;
+		   int BirdAir = 0, BirdHeli = 0, BirdPlane = 0;
+		   int RainAir = 0, RainHeli = 0, RainPlane = 0;
+		   void startAnimation(int type, bool TL) {
+			   String^ temp = path;
+			   bool Plane = 0, Ship = 0, Heli = 0;
+			   int birdRain = randomMinMax();
+			   switch (type) {
+			   case 0:
+				   Ship = 1;
+				   countAirship++;
+				   break;
+			   case 1:
+				   Plane = 1;
+				   countPlane++;
+				   break;
+			   case 2:
+				   Heli = 1;
+				   countHeli++;
+				   break;
+			   }
+			   if (birdRain >= 75) {
+				   temp += "rain\\";
+				   myrain->rain = 1;
+				   countRain++;
+				   if (Plane)
+					   RainPlane++;
+				   if (Heli)
+					   RainHeli++;
+				   if (Ship)
+					   RainAir++;
+				   rainAnimation(Ship, Plane, Heli, temp);
+			   }
+			   else if (birdRain <= 25) {
+				   Animation(type, 0);
+				   countBird++;
+				   mybirds->wasSpawn = 1;
+				   if (Plane)
+					   BirdPlane++;
+				   if (Heli)
+					   BirdHeli++;
+				   if (Ship)
+					   BirdAir++;
+				   temp += "birds\\";
+				   birdAnimation(Ship, Plane, Heli, temp);
+			   }
+			   else {
+				   Animation(type, 0);
+				   Animation(type, 1);
+			   }
+			   mybirds->wasSpawn = 0;
+			   myrain->rain = 0;
+		   }
+		   void birdAnimation(bool Ship, bool Plane, bool Heli, String^ Path) {
+			   int maxcount;
+			   int countofland;
+			   if (Plane) {
+				   Path += "plane\\";
+				   maxcount = 7;
+				   for (int i = 0; i < maxcount; i++) {
+					   myplane->changeCoord(1);
+					   mybirds->changeCoord();
+					   PIC1->Image = Image::FromFile(Path + i.ToString() + ".png");
+					   PIC1->Refresh();
+					   SpeedIncrease(Ship, Plane, Heli);
+					   HeightIncrease(Ship, Plane, Heli);
+					   Thread::Sleep(550);
+				   }
+			   }
+			   if (Heli) {
+				   myhelicopter->heigth = 0;
+				   myhelicopter->speed = 0;
+				   Path += "heli\\";
+				   maxcount = 11;
+				   countofland = 5;
+				   for (int i = 0; i < maxcount; i++) {
+					   mybirds->changeCoord();
+					   myhelicopter->changeCoord(1);
+					   PIC1->Image = Image::FromFile(Path + i.ToString() + ".png");
+					   PIC1->Refresh();
+					   if (i > countofland) {
+						   SpeedDecrease(Ship, Plane, Heli);
+						   HeightDecrease(Ship, Plane, Heli);
+					   }
+					   else {
+						   SpeedIncrease(Ship, Plane, Heli);
+						   HeightIncrease(Ship, Plane, Heli);
+					   }
+						myhelicopter->birds(mybirds->xCoord, mybirds->yCoord);
+					   Thread::Sleep(550);
+				   }
+			   }
+			   if (Ship) {
+				   Path += "airship\\";
+				   maxcount = 7;
+				   countofland = 4;
+				   for (int i = 0; i < maxcount; i++) {
+					   mybirds->changeCoord();
+					   myairship->changeCoord(1);
+					   PIC1->Image = Image::FromFile(Path + i.ToString() + ".png");
+					   PIC1->Refresh();
+					   if (maxcount >= countofland) {
+						   myairship->birds(mybirds->xCoord, mybirds->yCoord);
+						   LBL_HEIGHT->Text = "?";
+						   LBL_HEIGHT->Refresh();
+						   HeightDecrease(Ship, Plane, Heli);
+					   }
+					   else {
+						   SpeedIncrease(Ship, Plane, Heli);
+						   HeightIncrease(Ship, Plane, Heli);
+					   }
+					   Thread::Sleep(550);
+				   }
+			   }
 
-			 }
-			 void rainAnimation(bool Ship, bool Plane, bool Heli, String ^ Path) {
-				 int maxcount;
-				 PIC1->Image = Image::FromFile(Path + "basestrip.png");
-				 Thread::Sleep(550);
-				 if (Plane) {
-					 LBL_FUEL->Text = myplane->fuel.ToString();
-					 LBL_SPEED->Text = myplane->speed.ToString();
-					 LBL_END->Text = myplane->endurance.ToString();
-					 LBL_HEIGHT->Text = myplane->heigth.ToString();
-					 LBL_FUEL->Refresh();
-					 LBL_SPEED->Refresh();
-					 LBL_END->Refresh();
-					 LBL_HEIGHT->Refresh();
-					 maxcount = 7;
-					 for (int i = 0; i < maxcount; i++) {
-						 PIC1->Image = Image::FromFile(Path + "planeLand//" + i.ToString() + ".png");
-						 PIC1->Refresh();
-						 SpeedDecrease(Ship, Plane, Heli);
-						 HeightDecrease(Ship, Plane, Heli);
-						 Thread::Sleep(550);
-					 }
-					 PIC1->Image = Image::FromFile(Path + "plane.png");
-					 LBL_HEIGHT->Text = "0";
-					 LBL_SPEED->Text = "0";
-					 LBL_SPEED->Refresh();
-					 LBL_HEIGHT->Refresh();
-					 Thread::Sleep(550 * 4);
-					 Animation(1, 1);
-				 }
-				 if (Heli) {
-					 Path += "heli\\";
-					 LBL_FUEL->Text = myhelicopter->fuel.ToString();
-					 LBL_SPEED->Text = myhelicopter->speed.ToString();
-					 LBL_END->Text = myhelicopter->endurance.ToString();
-					 LBL_HEIGHT->Text = myhelicopter->heigth.ToString();
-					 LBL_FUEL->Refresh();
-					 LBL_SPEED->Refresh();
-					 LBL_END->Refresh();
-					 LBL_HEIGHT->Refresh();
-					 maxcount = 5;
-					 for (int i = 0; i < maxcount; i++) {
-						 PIC1->Image = Image::FromFile(Path + "landing\\" + i.ToString() + ".png");
-						 PIC1->Refresh();
-						 SpeedDecrease(Ship, Plane, Heli);
-						 HeightDecrease(Ship, Plane, Heli);
-						 Thread::Sleep(550);
-					 }
-					 LBL_HEIGHT->Text = "0";
-					 LBL_SPEED->Text = "0";
-					 LBL_SPEED->Refresh();
-					 LBL_HEIGHT->Refresh();
-					 if (Convert::ToInt32(LBL_FUEL->Text) <= 25) {
-						 while (myhelicopter->fuel != 100) {
-							 Thread::Sleep(550);
-							 Refuel(Ship, Plane, Heli);
-						 }
-					 }
-					 if (Convert::ToInt32(LBL_END->Text) <= 55) {
-						 while (myhelicopter->endurance != 100) {
-							 Thread::Sleep(550);
-							 Repair(Ship, Plane, Heli);
-						 }
-					 }
-					 for (int i = 0; i < maxcount; i++) {
-						 PIC1->Image = Image::FromFile(Path + "takeoff\\" + i.ToString() + ".png");
-						 PIC1->Refresh();
-						 SpeedIncrease(Ship, Plane, Heli);
-						 HeightIncrease(Ship, Plane, Heli);
-						 Thread::Sleep(550);
-					 }
-				 }
-				 if (Ship) {
-					 LBL_FUEL->Text = myairship->fuel.ToString();
-					 LBL_SPEED->Text = myairship->speed.ToString();
-					 LBL_END->Text = myairship->endurance.ToString();
-					 LBL_HEIGHT->Text = myairship->heigth.ToString();
-					 LBL_FUEL->Refresh();
-					 LBL_SPEED->Refresh();
-					 LBL_END->Refresh();
-					 LBL_HEIGHT->Refresh();
-					 maxcount = 6;
-					 for (int i = 0; i < maxcount; i++) {
-						 PIC1->Image = Image::FromFile(Path + "airshipLand//" + i.ToString() + ".png");
-						 PIC1->Refresh();
-						 SpeedDecrease(Ship, Plane, Heli);
-						 HeightDecrease(Ship, Plane, Heli);
-						 Thread::Sleep(550);
-					 }
-					 PIC1->Image = Image::FromFile(Path + "airship.png");
-					 LBL_HEIGHT->Text = "0";
-					 LBL_SPEED->Text = "0";
-					 LBL_SPEED->Refresh();
-					 LBL_HEIGHT->Refresh();
-					 Thread::Sleep(550 * 4);
-					 Animation(0, 1);
-				 }
-			 }
-			 void Animation(int type, bool TL) {//TL - 0 = landing, 1 takeoff
-				 String^ temp = path;
-				 int maxcount;
-				 bool Ship, Plane, Heli, needRefuel, needRepair;
-				 Ship = 0;
-				 Plane = 0;
-				 Heli = 0;
-				 switch (type) {
-				 case 0: {
-					 temp += "airship\\";
-					 maxcount = 6;
-					 Ship = 1;
-					 if (!TL)
-						 temp += "landing\\";
-					 else {
-						 temp += "takeoff\\";
-						 if (Convert::ToInt32(LBL_FUEL->Text) <= 15) {
-							 while (myairship->fuel != 100) {
-								 Thread::Sleep(550);
-								 Refuel(Ship, Plane, Heli);
-							 }
-						 }
-						 if (Convert::ToInt32(LBL_END->Text) <= 75) {
-							 while (myairship->endurance != 100) {
-								 Thread::Sleep(550);
-								 Repair(Ship, Plane, Heli);
-							 }
-						 }
-					 }
-					 break;
-				 }
-				 case 1: {
-					 temp += "plane\\";
-					 maxcount = 7;
-					 Plane = 1;
-					 if (!TL)
-						 temp += "landing\\";
-					 else {
-						 temp += "takeoff\\";
-						 if (Convert::ToInt32(LBL_FUEL->Text) <= 35) {
-							 while (myplane->fuel != 100) {
-								 Thread::Sleep(550);
-								 Refuel(Ship, Plane, Heli);
-							 }
-						 }
-						 if (Convert::ToInt32(LBL_END->Text) <= 85) {
-							 while (myplane->endurance != 100) {
-								 Thread::Sleep(550);
-								 Repair(Ship, Plane, Heli);
-							 }
-						 }
-					 }
-					 break;
+		   }
+		   bool Ship, Plane, Heli, needRefuel, needRepair;
+		   void rainAnimation(bool Ship, bool Plane, bool Heli, String^ Path) {
+			   int maxcount;
+			   PIC1->Image = Image::FromFile(Path + "basestrip.png");
+			   Thread::Sleep(550);
+			   if (Plane) {
+				   LBL_FUEL->Text = myplane->fuel.ToString();
+				   LBL_SPEED->Text = myplane->speed.ToString();
+				   LBL_END->Text = myplane->endurance.ToString();
+				   LBL_HEIGHT->Text = myplane->heigth.ToString();
+				   LBL_FUEL->Refresh();
+				   LBL_SPEED->Refresh();
+				   LBL_END->Refresh();
+				   LBL_HEIGHT->Refresh();
+				   maxcount = 7;
+				   for (int i = 0; i < maxcount; i++) {
+					   PIC1->Image = Image::FromFile(Path + "planeLand//" + i.ToString() + ".png");
+					   PIC1->Refresh();
+					   SpeedDecrease(Ship, Plane, Heli);
+					   HeightDecrease(Ship, Plane, Heli);
+					   Thread::Sleep(550);
+				   }
+				   PIC1->Image = Image::FromFile(Path + "plane.png");
+				   LBL_HEIGHT->Text = "0";
+				   LBL_SPEED->Text = "0";
+				   LBL_SPEED->Refresh();
+				   LBL_HEIGHT->Refresh();
+				   Thread::Sleep(550 * 4);
+				   Animation(1, 1);
+			   }
+			   if (Heli) {
+				   Path += "heli\\";
+				   LBL_FUEL->Text = myhelicopter->fuel.ToString();
+				   LBL_SPEED->Text = myhelicopter->speed.ToString();
+				   LBL_END->Text = myhelicopter->endurance.ToString();
+				   LBL_HEIGHT->Text = myhelicopter->heigth.ToString();
+				   LBL_FUEL->Refresh();
+				   LBL_SPEED->Refresh();
+				   LBL_END->Refresh();
+				   LBL_HEIGHT->Refresh();
+				   maxcount = 5;
+				   for (int i = 0; i < maxcount; i++) {
+					   PIC1->Image = Image::FromFile(Path + "landing\\" + i.ToString() + ".png");
+					   PIC1->Refresh();
+					   SpeedDecrease(Ship, Plane, Heli);
+					   HeightDecrease(Ship, Plane, Heli);
+					   Thread::Sleep(550);
+				   }
+				   LBL_HEIGHT->Text = "0";
+				   LBL_SPEED->Text = "0";
+				   LBL_SPEED->Refresh();
+				   LBL_HEIGHT->Refresh();
+				   if (Convert::ToInt32(LBL_FUEL->Text) <= 25) {
+					   while (myhelicopter->fuel != 100) {
+						   Thread::Sleep(550);
+						   Refuel(Ship, Plane, Heli);
+					   }
+				   }
+				   if (Convert::ToInt32(LBL_END->Text) <= 55) {
+					   while (myhelicopter->endurance != 100) {
+						   Thread::Sleep(550);
+						   Repair(Ship, Plane, Heli);
+					   }
+				   }
+				   for (int i = 0; i < maxcount; i++) {
+					   PIC1->Image = Image::FromFile(Path + "takeoff\\" + i.ToString() + ".png");
+					   PIC1->Refresh();
+					   SpeedIncrease(Ship, Plane, Heli);
+					   HeightIncrease(Ship, Plane, Heli);
+					   Thread::Sleep(550);
+				   }
+			   }
+			   if (Ship) {
+				   LBL_FUEL->Text = myairship->fuel.ToString();
+				   LBL_SPEED->Text = myairship->speed.ToString();
+				   LBL_END->Text = myairship->endurance.ToString();
+				   LBL_HEIGHT->Text = myairship->heigth.ToString();
+				   LBL_FUEL->Refresh();
+				   LBL_SPEED->Refresh();
+				   LBL_END->Refresh();
+				   LBL_HEIGHT->Refresh();
+				   maxcount = 6;
+				   for (int i = 0; i < maxcount; i++) {
+					   PIC1->Image = Image::FromFile(Path + "airshipLand//" + i.ToString() + ".png");
+					   PIC1->Refresh();
+					   SpeedDecrease(Ship, Plane, Heli);
+					   HeightDecrease(Ship, Plane, Heli);
+					   Thread::Sleep(550);
+				   }
+				   PIC1->Image = Image::FromFile(Path + "airship.png");
+				   LBL_HEIGHT->Text = "0";
+				   LBL_SPEED->Text = "0";
+				   LBL_SPEED->Refresh();
+				   LBL_HEIGHT->Refresh();
+				   Thread::Sleep(550 * 4);
+				   Animation(0, 1);
+			   }
+		   }
+		   void Animation(int type, bool TL) {//TL - 0 = landing, 1 takeoff
+			   String^ temp = path;
+			   int maxcount;
+			   Ship = 0;
+			   Plane = 0;
+			   Heli = 0;
+			   switch (type) {
+			   case 0: {
+				   temp += "airship\\";
+				   maxcount = 6;
+				   Ship = 1;
+				   if (!TL)
+					   temp += "landing\\";
+				   else {
+					   temp += "takeoff\\";
+					   if (Convert::ToInt32(LBL_FUEL->Text) <= 15) {
+						   while (myairship->fuel != 100) {
+							   Thread::Sleep(550);
+							   Refuel(Ship, Plane, Heli);
+						   }
+					   }
+					   if (Convert::ToInt32(LBL_END->Text) <= 75) {
+						   while (myairship->endurance != 100) {
+							   Thread::Sleep(550);
+							   Repair(Ship, Plane, Heli);
+						   }
+					   }
+				   }
+				   break;
+			   }
+			   case 1: {
+				   temp += "plane\\";
+				   maxcount = 7;
+				   Plane = 1;
+				   if (!TL)
+					   temp += "landing\\";
+				   else {
+					   temp += "takeoff\\";
+					   if (Convert::ToInt32(LBL_FUEL->Text) <= 35) {
+						   while (myplane->fuel != 100) {
+							   Thread::Sleep(550);
+							   Refuel(Ship, Plane, Heli);
+						   }
+					   }
+					   if (Convert::ToInt32(LBL_END->Text) <= 85) {
+						   while (myplane->endurance != 100) {
+							   Thread::Sleep(550);
+							   Repair(Ship, Plane, Heli);
+						   }
+					   }
+				   }
+				   break;
 
-				 }
-				 case 2: {
-					 temp += "helicopter\\";
-					 maxcount = 5;
-					 Heli = 1;
-					 if (!TL)
-						 temp += "landing\\";
-					 else {
-						 temp += "takeoff\\";
-						 if (Convert::ToInt32(LBL_FUEL->Text) <= 25) {
-							 while (myhelicopter->fuel != 100) {
-								 Thread::Sleep(550);
-								 Refuel(Ship, Plane, Heli);
-							 }
-						 }
-						 if (Convert::ToInt32(LBL_END->Text) <= 55) {
-							 while (myhelicopter->endurance != 100) {
-								 Thread::Sleep(550);
-								 Repair(Ship, Plane, Heli);
-							 }
-						 }
-					 }
-					 break;
-				 }
-				 }
-				 for (int i = 0; i < maxcount; i++) {
-					 PIC1->Image = Image::FromFile(temp + i.ToString() + ".png");
-					 PIC1->Refresh();
-					 if (!TL) {
-						 SpeedDecrease(Ship, Plane, Heli);
-						 HeightDecrease(Ship, Plane, Heli);
-					 }
-					 else {
-						 SpeedIncrease(Ship, Plane, Heli);
-						 HeightIncrease(Ship, Plane, Heli);
-					 }
-					 Thread::Sleep(550);
-				 }
-				 PIC1->Image = Image::FromFile(path + "source and psd\\base strips.png");
-				 Ship = 0; Plane = 0; Heli = 0;
-				 if (!TL) {
-					 LBL_HEIGHT->Text = "0";
-					 LBL_SPEED->Text = "0";
-					 LBL_SPEED->Refresh();
-					 LBL_HEIGHT->Refresh();
+			   }
+			   case 2: {
+				   temp += "helicopter\\";
+				   maxcount = 5;
+				   Heli = 1;
+				   if (!TL)
+					   temp += "landing\\";
+				   else {
+					   temp += "takeoff\\";
+					   if (Convert::ToInt32(LBL_FUEL->Text) <= 25) {
+						   while (myhelicopter->fuel != 100) {
+							   Thread::Sleep(550);
+							   Refuel(Ship, Plane, Heli);
+						   }
+					   }
+					   if (Convert::ToInt32(LBL_END->Text) <= 55) {
+						   while (myhelicopter->endurance != 100) {
+							   Thread::Sleep(550);
+							   Repair(Ship, Plane, Heli);
+						   }
+					   }
+				   }
+				   break;
+			   }
+			   }
+			   for (int i = 0; i < maxcount; i++) {
+				   PIC1->Image = Image::FromFile(temp + i.ToString() + ".png");
+				   PIC1->Refresh();
+				   if (!TL) {
+					   SpeedDecrease(Ship, Plane, Heli);
+					   HeightDecrease(Ship, Plane, Heli);
+				   }
+				   else {
+					   SpeedIncrease(Ship, Plane, Heli);
+					   HeightIncrease(Ship, Plane, Heli);
+				   }
+				   Thread::Sleep(550);
+			   }
+			   PIC1->Image = Image::FromFile(path + "source and psd\\base strips.png");
+			   Ship = 0; Plane = 0; Heli = 0;
+			   if (!TL) {
+				   LBL_HEIGHT->Text = "0";
+				   LBL_SPEED->Text = "0";
+				   LBL_SPEED->Refresh();
+				   LBL_HEIGHT->Refresh();
 
-				 }
-				 else {
-					 LBL_END->Text = "?";
-					 LBL_FUEL->Text = "?";
-					 LBL_HEIGHT->Text = "?";
-					 LBL_SPEED->Text = "?";
-					 LBL_END->Refresh();
-					 LBL_SPEED->Refresh();
-					 LBL_FUEL->Refresh();
-					 LBL_HEIGHT->Refresh();
-				 }
-			 }
-
-
-	private: System::Void BUT_Birds_Click(System::Object ^ sender, System::EventArgs ^ e) {
+			   }
+			   else {
+				   LBL_END->Text = "?";
+				   LBL_FUEL->Text = "?";
+				   LBL_HEIGHT->Text = "?";
+				   LBL_SPEED->Text = "?";
+				   LBL_END->Refresh();
+				   LBL_SPEED->Refresh();
+				   LBL_FUEL->Refresh();
+				   LBL_HEIGHT->Refresh();
+			   }
+		   }
+		   void ChangeCorrd(int type, bool TL, bool bird) {
+			   switch (type) {
+			   case 0: {
+				   myairship->changeCoord(TL);
+				   break;
+			   }
+			   case 1: {
+				   myplane->changeCoord(TL);
+				   break;
+			   }
+			   case 2: {
+				   myhelicopter->changeCoord(TL);
+			   }
+			   }
+			   if (bird) {
+				   mybirds->changeCoord();
+			   }
+		   }
+		   //BIRDS -> f(x) = -1/(x-b) + a + c, b = 4.6, c = 0;
+		   //if HELI + BIRDS -> f(x) = -1/(x-b) + a + c, b = 4.6 c = 1.73 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	private: System::Void BUT_Birds_Click(System::Object^ sender, System::EventArgs^ e) {
 		birdAnimation(0, 1, 0, path + "birds\\");
 		birdAnimation(0, 0, 1, path + "birds\\");
 		birdAnimation(1, 0, 0, path + "birds\\");
 	}
-	private: System::Void BUT_Rain_Click(System::Object ^ sender, System::EventArgs ^ e) {
+	private: System::Void BUT_Rain_Click(System::Object^ sender, System::EventArgs^ e) {
 		rainAnimation(0, 1, 0, path + "rain\\");
 		rainAnimation(0, 0, 1, path + "rain\\");
 		rainAnimation(1, 0, 0, path + "rain\\");
 	}
-};
+	};
 }
